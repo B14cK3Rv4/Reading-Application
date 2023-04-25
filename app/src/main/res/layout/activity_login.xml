@@ -35,8 +35,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/emailAddress"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailAddressLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
@@ -57,8 +57,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="360dp"
@@ -68,7 +68,7 @@
             android:ems="10"
             android:fontFamily="sans-serif-condensed-medium"
             android:hint="Password..."
-            android:inputType="text"
+            android:inputType="textPassword"
             android:minHeight="48dp"
             android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
