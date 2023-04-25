@@ -27,6 +27,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+
 public class UploadActivity extends AppCompatActivity {
 
     ImageView uploadImage;
@@ -81,7 +84,7 @@ public class UploadActivity extends AppCompatActivity {
 
     public void saveData(){
 
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
                 .child(uri.getLastPathSegment());
 
@@ -117,7 +120,9 @@ public class UploadActivity extends AppCompatActivity {
 
         DataClass dataClass = new DataClass(title, desc, lang, imageURL);
 
-        FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content").child(title)
+        String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+        FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content").child(currentDate)
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

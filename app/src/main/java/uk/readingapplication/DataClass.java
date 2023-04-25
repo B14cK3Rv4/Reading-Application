@@ -12,14 +12,17 @@ public class DataClass {
     }
 
     public String getDataDesc() {
+
         return dataDesc;
     }
 
     public String getDataLang() {
+
         return dataLang;
     }
 
     public String getDataImage() {
+
         return dataImage;
     }
 
@@ -30,5 +33,11 @@ public class DataClass {
         this.dataImage = dataImage;
 
     }
+
+    public DataClass(){
+
+
+    }
+
 
 }

@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.ReadingApplication" parent="Base.Theme.ReadingApplication" />
     <!-- Base application theme. -->
     <style name="Base.Theme.ReadingApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -7,5 +8,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
 
-    <style name="Theme.ReadingApplication" parent="Base.Theme.ReadingApplication" />
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
