@@ -43,6 +43,8 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/upload" />
 
+
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -79,6 +81,25 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:text="Upload Media"
+                android:id="@+id/uploadMedia"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                app:cornerRadius = "20dp"/>
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:text="Save"
                 android:id="@+id/saveButton"
                 android:textSize="18sp"
@@ -86,8 +107,9 @@
                 app:cornerRadius = "20dp"/>
 
 
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+
 
 </ScrollView>

@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -16,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,11 +36,16 @@ import java.util.Calendar;
 public class UploadActivity extends AppCompatActivity {
 
     ImageView uploadImage;
-
     Button saveButton;
     EditText uploadTitle, uploadDesc, uploadLang;
     String imageURL;
     Uri uri;
+
+    private static final int PICK_VIDEO = 1;
+    VideoView videoView;
+    Button uploadMedia;
+    Uri videoUri;
+    MediaController mediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,14 @@ public class UploadActivity extends AppCompatActivity {
         uploadTitle = findViewById(R.id.uploadTitle);
         uploadLang = findViewById(R.id.uploadLang);
         saveButton = findViewById(R.id.saveButton);
+        videoView = findViewById(R.id.videoView);
+
+
+        mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
+        videoView.start();
+        uploadMedia = findViewById(R.id.uploadMedia);
+
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -66,12 +82,37 @@ public class UploadActivity extends AppCompatActivity {
                 }
         );
 
+        ActivityResultLauncher<Intent> activityResultLauncher1 = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode() == Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            videoUri = data.getData();
+                            videoView.setVideoURI(videoUri);
+                        }else {
+                            Toast.makeText(UploadActivity.this, "No Video Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
         uploadImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
                 photoPicker.setType("image/*");
                 activityResultLauncher.launch(photoPicker);
+            }
+        });
+
+        uploadMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent videoPicker = new Intent(Intent.ACTION_PICK);
+                videoPicker.setType("video/*");
+                activityResultLauncher1.launch(videoPicker);
             }
         });
 
@@ -82,6 +123,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void saveData(){
 

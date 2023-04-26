@@ -51,6 +51,15 @@
         android:textSize="18sp"
         android:textColor="@color/blue1"/>
 
+    <VideoView
+        android:id="@+id/detailVideo"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -93,9 +102,6 @@
 
         </com.github.clans.fab.FloatingActionMenu>
 
-
-
-
-
     </RelativeLayout>
+
 </LinearLayout>
