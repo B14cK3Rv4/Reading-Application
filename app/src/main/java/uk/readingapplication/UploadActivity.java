@@ -34,7 +34,7 @@ public class UploadActivity extends AppCompatActivity {
 
     ImageView uploadImage;
     Button saveButton;
-    EditText uploadTopic, uploadDesc, uploadLang;
+    EditText uploadTitle, uploadDesc, uploadLang;
     String imageURL;
     Uri uri;
 
@@ -45,7 +45,7 @@ public class UploadActivity extends AppCompatActivity {
 
         uploadImage = findViewById(R.id.uploadImage);
         uploadDesc = findViewById(R.id.uploadDesc);
-        uploadTopic = findViewById(R.id.uploadTopic);
+        uploadTitle = findViewById(R.id.uploadTitle);
         uploadLang = findViewById(R.id.uploadLang);
         saveButton = findViewById(R.id.saveButton);
 
@@ -114,7 +114,7 @@ public class UploadActivity extends AppCompatActivity {
 
     public void uploadData(){
 
-        String title = uploadTopic.getText().toString();
+        String title = uploadTitle.getText().toString();
         String desc = uploadDesc.getText().toString();
         String lang = uploadLang.getText().toString();
 

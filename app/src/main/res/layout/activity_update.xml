@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UploadActivity">
+    tools:context=".UpdateActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,13 +28,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Book"
+                android:text="Update Book"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textColor="@color/blue1"/>
 
             <ImageView
-                android:id="@+id/uploadImage"
+                android:id="@+id/updateImage"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_marginTop="20dp"
@@ -46,7 +46,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/uploadTitle"
+                android:id="@+id/updateTitle"
                 android:background="@drawable/blue1_border"
                 android:layout_marginTop="20dp"
                 android:padding="16dp"
@@ -57,7 +57,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/uploadDesc"
+                android:id="@+id/updateDesc"
                 android:background="@drawable/blue1_border"
                 android:layout_marginTop="20dp"
                 android:padding="16dp"
@@ -68,7 +68,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/uploadLang"
+                android:id="@+id/updateLang"
                 android:background="@drawable/blue1_border"
                 android:layout_marginTop="20dp"
                 android:padding="16dp"
@@ -79,8 +79,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Save"
-                android:id="@+id/saveButton"
+                android:text="Update"
+                android:id="@+id/updateButton"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
                 app:cornerRadius = "20dp"/>
