@@ -33,6 +33,7 @@ import java.util.Calendar;
 public class UploadActivity extends AppCompatActivity {
 
     ImageView uploadImage;
+
     Button saveButton;
     EditText uploadTitle, uploadDesc, uploadLang;
     String imageURL;
