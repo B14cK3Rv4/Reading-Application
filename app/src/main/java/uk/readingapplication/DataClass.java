@@ -6,6 +6,9 @@ public class DataClass {
     private String dataDesc;
     private String dataLang;
     private String dataImage;
+
+    private String dataVideo;
+
     private String key;
 
     public String getKey() {
@@ -35,11 +38,16 @@ public class DataClass {
         return dataImage;
     }
 
-    public DataClass(String dataTitle, String dataDesc, String dataLang, String dataImage) {
+    public String getDataVideo() {
+        return dataVideo;
+    }
+
+    public DataClass(String dataTitle, String dataDesc, String dataLang, String dataImage, String dataVideo) {
         this.dataTitle = dataTitle;
         this.dataDesc = dataDesc;
         this.dataLang = dataLang;
         this.dataImage = dataImage;
+        this.dataVideo = dataVideo;
 
     }
 

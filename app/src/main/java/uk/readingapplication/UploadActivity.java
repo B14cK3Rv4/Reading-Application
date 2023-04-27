@@ -44,6 +44,7 @@ public class UploadActivity extends AppCompatActivity {
     private static final int PICK_VIDEO = 1;
     VideoView videoView;
     Button uploadMedia;
+    String videoURL;
     Uri videoUri;
     MediaController mediaController;
 
@@ -119,6 +120,7 @@ public class UploadActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
+
                 saveData();
             }
         });
@@ -130,6 +132,9 @@ public class UploadActivity extends AppCompatActivity {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
                 .child(uri.getLastPathSegment());
+
+        StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("Android Videos")
+                .child(videoUri.getLastPathSegment());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
         builder.setCancelable(false);
@@ -153,6 +158,31 @@ public class UploadActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
+
+
+
+
+        storageReference1.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isComplete());
+                Uri urlVideo = uriTask.getResult();
+                videoURL = urlVideo.toString();
+                uploadData();
+                dialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                dialog.dismiss();
+            }
+        });
+
+
+
+
     }
 
     public void uploadData(){
@@ -161,7 +191,7 @@ public class UploadActivity extends AppCompatActivity {
         String desc = uploadDesc.getText().toString();
         String lang = uploadLang.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageURL);
+        DataClass dataClass = new DataClass(title, desc, lang, imageURL, videoURL);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
