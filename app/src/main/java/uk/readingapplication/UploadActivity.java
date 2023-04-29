@@ -37,14 +37,17 @@ public class UploadActivity extends AppCompatActivity {
 
     ImageView uploadImage;
     Button saveButton;
+    Button saveMediaButton;
     EditText uploadTitle, uploadDesc, uploadLang;
     String imageURL;
     Uri uri;
 
     private static final int PICK_VIDEO = 1;
-    VideoView videoView;
+    VideoView uploadVideo;
     Button uploadMedia;
-    Uri videoUri;
+
+    String videoURL;
+    Uri uri1;
     MediaController mediaController;
 
     @Override
@@ -57,12 +60,13 @@ public class UploadActivity extends AppCompatActivity {
         uploadTitle = findViewById(R.id.uploadTitle);
         uploadLang = findViewById(R.id.uploadLang);
         saveButton = findViewById(R.id.saveButton);
-        videoView = findViewById(R.id.videoView);
+        saveMediaButton = findViewById(R.id.saveMediaButton);
+        uploadVideo = findViewById(R.id.videoView);
 
 
         mediaController = new MediaController(this);
-        videoView.setMediaController(mediaController);
-        videoView.start();
+        uploadVideo.setMediaController(mediaController);
+        uploadVideo.start();
         uploadMedia = findViewById(R.id.uploadMedia);
 
 
@@ -71,11 +75,11 @@ public class UploadActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             uri = data.getData();
                             uploadImage.setImageURI(uri);
-                        }else {
+                        } else {
                             Toast.makeText(UploadActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -87,20 +91,20 @@ public class UploadActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
-                            videoUri = data.getData();
-                            videoView.setVideoURI(videoUri);
-                        }else {
+                            uri1 = data.getData();
+                            uploadVideo.setVideoURI(uri1);
+                        } else {
                             Toast.makeText(UploadActivity.this, "No Video Selected", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
         );
 
-        uploadImage.setOnClickListener(new View.OnClickListener(){
+        uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
                 photoPicker.setType("image/*");
                 activityResultLauncher.launch(photoPicker);
@@ -118,18 +122,65 @@ public class UploadActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View view){
+            public void onClick(View view) {
                 saveData();
             }
         });
+
+        saveMediaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveMedia();
+            }
+        });
+
     }
 
 
-    public void saveData(){
 
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
-                .child(uri.getLastPathSegment());
+    public void saveData() {
+
+        if (uri == null) {
+            Toast.makeText(UploadActivity.this, "Error, no image selected", Toast.LENGTH_SHORT).show();
+        } else {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
+                    .child(uri.getLastPathSegment());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
+            builder.setCancelable(false);
+            builder.setView(R.layout.progress_layout);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isComplete()) ;
+                    Uri urlImage = uriTask.getResult();
+                    imageURL = urlImage.toString();
+
+                    //Uri urlVideo = uriTask.getResult();
+                    //videoURL = urlVideo.toString();
+
+                    uploadData();
+                    dialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                }
+            });
+
+        }
+    }
+
+    public void saveMedia(){
+
+        StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("Android Videos")
+                .child(uri1.getLastPathSegment());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
         builder.setCancelable(false);
@@ -137,14 +188,14 @@ public class UploadActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        storageReference1.putFile(uri1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!uriTask.isComplete());
-                Uri urlImage = uriTask.getResult();
-                imageURL = urlImage.toString();
-                uploadData();
+                Uri urlVideo = uriTask.getResult();
+                videoURL = urlVideo.toString();
+                //uploadData();
                 dialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -153,7 +204,9 @@ public class UploadActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
     }
+
 
     public void uploadData(){
 
@@ -161,7 +214,7 @@ public class UploadActivity extends AppCompatActivity {
         String desc = uploadDesc.getText().toString();
         String lang = uploadLang.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageURL);
+        DataClass dataClass = new DataClass(title, desc, lang, imageURL, videoURL);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 

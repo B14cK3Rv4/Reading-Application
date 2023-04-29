@@ -94,16 +94,27 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Save Media"
+                android:id="@+id/saveMediaButton"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="80dp"
+                app:cornerRadius = "20dp"/>
 
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Save"
+                android:text="Finish Book"
                 android:id="@+id/saveButton"
                 android:textSize="18sp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="160dp"
+                android:layout_marginBottom="80dp"
                 app:cornerRadius = "20dp"/>
 
 

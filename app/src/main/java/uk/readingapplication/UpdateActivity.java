@@ -38,6 +38,13 @@ public class UpdateActivity extends AppCompatActivity {
     String imageUrl;
     String key, oldImageURL;
     Uri uri;
+
+    String videoUrl;
+    String key1, oldVideoURL;
+    Uri uri1;
+
+
+
     DatabaseReference databaseReference;
     StorageReference storageReference;
 
@@ -135,7 +142,7 @@ public class UpdateActivity extends AppCompatActivity {
         desc = updateDesc.getText().toString().trim();
         lang = updateLang.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageUrl);
+        DataClass dataClass = new DataClass(title, desc, lang, imageUrl, videoUrl);
 
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
