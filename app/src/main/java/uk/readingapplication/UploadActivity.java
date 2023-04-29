@@ -177,34 +177,37 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
-    public void saveMedia(){
+    public void saveMedia() {
+        if (uri1 == null) {
+            Toast.makeText(UploadActivity.this, "Error, no video selected", Toast.LENGTH_SHORT).show();
+        } else {
+            StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("Android Videos")
+                    .child(uri1.getLastPathSegment());
 
-        StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("Android Videos")
-                .child(uri1.getLastPathSegment());
+            AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
+            builder.setCancelable(false);
+            builder.setView(R.layout.progress_layout);
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
-        builder.setCancelable(false);
-        builder.setView(R.layout.progress_layout);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+            storageReference1.putFile(uri1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isComplete()) ;
+                    Uri urlVideo = uriTask.getResult();
+                    videoURL = urlVideo.toString();
+                    //uploadData();
+                    dialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                }
+            });
 
-        storageReference1.putFile(uri1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete());
-                Uri urlVideo = uriTask.getResult();
-                videoURL = urlVideo.toString();
-                //uploadData();
-                dialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-            }
-        });
-
+        }
     }
 
 
