@@ -31,17 +31,44 @@
                 android:text="Upload Book"
                 android:textSize="30sp"
                 android:textAlignment="center"
+                android:layout_marginBottom="40dp"
                 android:textColor="@color/blue1"/>
 
-            <ImageView
-                android:id="@+id/uploadImage"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="90dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/upload" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="185dp"
+                android:layout_height="185dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center"
+                app:cardBackgroundColor="@color/black">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    app:cardCornerRadius="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:innerRadius="10dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    android:elevation="12dp"
+                    android:layout_gravity="center">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/uploadImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/blue1_border"
+                        android:backgroundTint="@color/green"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/upload"
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded">
+
+                    </com.google.android.material.imageview.ShapeableImageView>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
             <EditText
@@ -51,8 +78,8 @@
                 android:background="@drawable/blue1_border"
                 android:layout_marginTop="20dp"
                 android:padding="16dp"
-                android:hint="Enter title name"
                 android:layout_gravity="start|center_vertical"
+                android:hint="Enter title name"
                 android:textColor="@color/blue1"/>
 
             <EditText

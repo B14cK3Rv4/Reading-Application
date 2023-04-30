@@ -44,7 +44,7 @@ public class UploadActivity extends AppCompatActivity {
     ImageView uploadImage;
     Button saveButton;
     Button saveMediaButton;
-    EditText uploadTitle, uploadDesc, uploadLang;
+    EditText uploadTitle, uploadDesc, uploadLang, uploadStory;
     String imageURL;
     Uri uri;
     VideoView uploadVideo;
@@ -76,6 +76,9 @@ public class UploadActivity extends AppCompatActivity {
         uploadDesc = findViewById(R.id.uploadDesc);
         uploadTitle = findViewById(R.id.uploadTitle);
         uploadLang = findViewById(R.id.uploadLang);
+        uploadStory = findViewById(R.id.uploadStory);
+
+
         saveButton = findViewById(R.id.saveButton);
         saveMediaButton = findViewById(R.id.saveMediaButton);
         uploadVideo = findViewById(R.id.videoView);
@@ -232,8 +235,9 @@ public class UploadActivity extends AppCompatActivity {
         String title = uploadTitle.getText().toString();
         String desc = uploadDesc.getText().toString();
         String lang = uploadLang.getText().toString();
+        String story = uploadStory.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageURL, videoURL);
+        DataClass dataClass = new DataClass(title, desc, lang, story, imageURL, videoURL);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 

@@ -1,9 +1,11 @@
 package uk.readingapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +27,7 @@ import java.util.Collections;
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView detailDesc, detailTitle, detailLang;
+    TextView detailDesc, detailTitle, detailLang, detailStory;
     ImageView detailImage;
     FloatingActionButton deleteButton, editButton;
     String key = "";
@@ -33,8 +35,6 @@ public class DetailActivity extends AppCompatActivity {
 
     String videoUrl = "";
 
-
-    String urlVideo = "https://firebasestorage.googleapis.com/v0/b/readingapplication-c4df8.appspot.com/o/Android%20Videos%2F205639969?alt=media&token=dd5b23c6-84e0-4099-a479-25969b45ac81";
     PlayerView detailVideo;
 
     @Override
@@ -46,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         detailImage = findViewById(R.id.detailImage);
         detailTitle = findViewById(R.id.detailTitle);
         detailLang = findViewById(R.id.detailLang);
+        detailStory = findViewById(R.id.detailStory);
         deleteButton = findViewById(R.id.deleteButton);
         editButton = findViewById(R.id.editButton);
 
@@ -56,6 +57,7 @@ public class DetailActivity extends AppCompatActivity {
             detailDesc.setText(bundle.getString("Description"));
             detailTitle.setText(bundle.getString("Title"));
             detailLang.setText(bundle.getString("Language"));
+            detailStory.setText(bundle.getString("Story"));
             key = bundle.getString("Key");
 
             imageUrl = bundle.getString("Image");
@@ -102,6 +104,7 @@ public class DetailActivity extends AppCompatActivity {
                         .putExtra("Title", detailTitle.getText().toString())
                         .putExtra("Description", detailDesc.getText().toString())
                         .putExtra("Language", detailLang.getText().toString())
+                        .putExtra("Story", detailStory.getText().toString())
                         .putExtra("Video", videoUrl)
                         .putExtra("Image", imageUrl)
                         .putExtra("Key", key);

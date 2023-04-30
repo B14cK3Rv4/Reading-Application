@@ -37,8 +37,8 @@ public class UpdateActivity extends AppCompatActivity {
     Button updateButton;
 
     Button saveMediaButton2;
-    EditText updateDesc, updateTitle, updateLang;
-    String title, desc, lang;
+    EditText updateDesc, updateTitle, updateLang, updateStory;
+    String title, desc, lang, story;
     String imageUrl;
     String key, oldImageURL;
     Uri uri;
@@ -66,6 +66,7 @@ public class UpdateActivity extends AppCompatActivity {
         updateDesc = findViewById(R.id.updateDesc);
         updateImage = findViewById(R.id.updateImage);
         updateLang = findViewById(R.id.updateLang);
+        updateStory = findViewById(R.id.updateStory);
         updateTitle = findViewById(R.id.updateTitle);
         updateMedia = findViewById(R.id.updateMedia);
 
@@ -117,6 +118,7 @@ public class UpdateActivity extends AppCompatActivity {
             updateTitle.setText(bundle.getString("Title"));
             updateDesc.setText(bundle.getString("Description"));
             updateLang.setText(bundle.getString("Language"));
+            updateStory.setText(bundle.getString("Story"));
             key = bundle.getString("Key");
             oldImageURL = bundle.getString("Image");
             oldVideoURL = bundle.getString("Video");
@@ -234,8 +236,9 @@ public class UpdateActivity extends AppCompatActivity {
         title = updateTitle.getText().toString().trim();
         desc = updateDesc.getText().toString().trim();
         lang = updateLang.getText().toString();
+        story = updateStory.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageUrl, videoURL);
+        DataClass dataClass = new DataClass(title, desc, lang, story, imageUrl, videoURL);
 
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

@@ -5,6 +5,8 @@ public class DataClass {
     private String dataTitle;
     private String dataDesc;
     private String dataLang;
+
+    private String dataStory;
     private String dataImage;
 
     private String dataVideo;
@@ -36,6 +38,11 @@ public class DataClass {
         return dataLang;
     }
 
+    public String getDataStory() {
+
+        return dataStory;
+    }
+
     public String getDataImage() {
 
         return dataImage;
@@ -46,12 +53,14 @@ public class DataClass {
         return dataVideo;
     }
 
-    public DataClass(String dataTitle, String dataDesc, String dataLang, String dataImage, String dataVideo) {
+    public DataClass(String dataTitle, String dataDesc, String dataLang, String dataStory, String dataImage, String dataVideo) {
         this.dataTitle = dataTitle;
         this.dataDesc = dataDesc;
         this.dataLang = dataLang;
+        this.dataStory = dataStory;
         this.dataImage = dataImage;
         this.dataVideo = dataVideo;
+
 
     }
 
