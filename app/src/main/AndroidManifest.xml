@@ -16,26 +16,28 @@
         android:theme="@style/Theme.ReadingApplication"
         tools:targetApi="31">
         <activity
-            android:name=".UpdateActivity"
-            android:hardwareAccelerated="true"
+            android:name=".FullscreenActivity"
             android:exported="false" />
+        <activity
+            android:name=".UpdateActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".DetailActivity"
-            android:hardwareAccelerated="true"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".UploadActivity"
-            android:hardwareAccelerated="false"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="false" />
         <activity
             android:name=".RegisterActivity"
-            android:hardwareAccelerated="false"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="false" />
         <activity
             android:name=".LoginActivity"
-            android:hardwareAccelerated="false"
-
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

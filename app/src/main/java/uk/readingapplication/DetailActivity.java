@@ -68,6 +68,16 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
+        detailVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                videoUrl = bundle.getString("Video");
+                Intent intent = new Intent(DetailActivity.this, FullscreenActivity.class)
+                        .putExtra("Video1", videoUrl);
+                startActivity(intent);
+            }
+        });
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
