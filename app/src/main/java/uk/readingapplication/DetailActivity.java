@@ -102,6 +102,7 @@ public class DetailActivity extends AppCompatActivity {
                         .putExtra("Title", detailTitle.getText().toString())
                         .putExtra("Description", detailDesc.getText().toString())
                         .putExtra("Language", detailLang.getText().toString())
+                        .putExtra("Video", videoUrl)
                         .putExtra("Image", imageUrl)
                         .putExtra("Key", key);
                 startActivity(intent);

@@ -41,8 +41,6 @@ public class UploadActivity extends AppCompatActivity {
     EditText uploadTitle, uploadDesc, uploadLang;
     String imageURL;
     Uri uri;
-
-    private static final int PICK_VIDEO = 1;
     VideoView uploadVideo;
     Button uploadMedia;
 
@@ -135,8 +133,6 @@ public class UploadActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
     public void saveData() {

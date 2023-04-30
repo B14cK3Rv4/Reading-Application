@@ -76,13 +76,54 @@
                 android:layout_gravity="start|center_vertical"
                 android:textColor="@color/blue1"/>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:id="@+id/updateStory"
+                android:background="@drawable/blue1_border"
+                android:layout_marginTop="20dp"
+                android:padding="16dp"
+                android:hint="Write your story here..."
+                android:layout_gravity="start|center_vertical"
+                android:textColor="@color/blue1"/>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Update"
-                android:id="@+id/updateButton"
+                android:text="Upload Media"
+                android:id="@+id/updateMedia"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
+                app:cornerRadius = "20dp"/>
+
+            <VideoView
+                android:id="@+id/videoViewUpdate"
+                android:layout_width="400dp"
+                android:layout_height="180dp"
+                android:backgroundTint="@android:color/black"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layoutDirection="locale"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Save Media"
+                android:id="@+id/saveMediaButton2"
+                android:textSize="18sp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                app:cornerRadius = "20dp"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Finish Book"
+                android:id="@+id/updateButton"
+                android:textSize="18sp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="40dp"
                 app:cornerRadius = "20dp"/>
 
 
