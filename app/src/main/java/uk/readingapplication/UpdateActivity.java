@@ -165,10 +165,11 @@ public class UpdateActivity extends AppCompatActivity {
     public void saveData(){
 
         if (uri == null) {
-            Toast.makeText(UpdateActivity.this, "Error, no image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdateActivity.this, "Error, no image replaced", Toast.LENGTH_SHORT).show();
         } else {
 
-            storageReference = FirebaseStorage.getInstance().getReference().child("Android Images").child(uri.getLastPathSegment());
+            storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
+                    .child(uri.getLastPathSegment());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
             builder.setCancelable(false);
@@ -197,7 +198,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     public void saveMedia() {
         if (uri1 == null) {
-            Toast.makeText(UpdateActivity.this, "Error, no video selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdateActivity.this, "Error, no video replaced", Toast.LENGTH_SHORT).show();
         } else {
             StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child("Android Videos")
                     .child(uri1.getLastPathSegment());
