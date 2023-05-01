@@ -8,6 +8,25 @@
     android:background="@drawable/wp7051633space1245152"
     tools:context=".FullscreenActivity">
 
+    <TextView
+        android:id="@+id/videoLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="12dp"
+
+        android:background="@drawable/blue1_border"
+        android:backgroundTint="@color/material_on_primary_emphasis_medium"
+        android:fontFamily="@font/allan_bold"
+        android:padding="12dp"
+        android:text="Video Library"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/exoVideo"
         android:layout_width="match_parent"

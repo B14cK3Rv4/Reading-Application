@@ -14,6 +14,7 @@ import android.text.style.LineHeightSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayer;
@@ -25,6 +26,7 @@ import java.util.Collections;
 
 public class FullscreenActivity extends AppCompatActivity {
 
+    public TextView videoLibrary;
     private ExoPlayer player;
     private PlayerView  playerView;
 
@@ -45,6 +47,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
 
         playerView  = findViewById(R.id.exoVideo);
+        videoLibrary = findViewById(R.id.videoLibrary);
 
         Intent intent = getIntent();
         url = intent.getExtras().getString("Video1");
@@ -57,6 +60,7 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(fullscreen){
+                    videoLibrary.setVisibility(View.VISIBLE);
                     fullscreenButton.setImageDrawable(ContextCompat.getDrawable(FullscreenActivity.this, R.drawable.max96white));
                     getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                     if(getSupportActionBar() !=null) {
@@ -84,6 +88,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     params.height = params.MATCH_PARENT;
                     playerView.setLayoutParams(params);
                     fullscreen = true;
+                    videoLibrary.setVisibility(View.GONE);
                 }
             }
         });
