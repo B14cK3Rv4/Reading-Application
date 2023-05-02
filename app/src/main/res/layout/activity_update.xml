@@ -103,6 +103,39 @@
                 android:layout_gravity="start|center_vertical"
                 android:textColor="@color/blue1"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Update Audio"
+                android:id="@+id/updateAudio"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                app:cornerRadius="20dp" />
+
+            <VideoView
+
+                android:id="@+id/updateAudioView"
+                android:background="@drawable/audioback"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layoutDirection="locale">
+
+            </VideoView>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Save Media"
+                android:id="@+id/updateAudioButton"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="0dp"
+                app:cornerRadius="20dp" />
+
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="160dp"

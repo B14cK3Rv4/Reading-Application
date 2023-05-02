@@ -23,7 +23,7 @@
         <activity
             android:name=".UpdateActivity"
             android:exported="false"
-            android:hardwareAccelerated="true" />
+            android:hardwareAccelerated="false" />
         <activity
             android:name=".DetailActivity"
             android:exported="false"

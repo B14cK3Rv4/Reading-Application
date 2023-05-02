@@ -35,7 +35,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     ImageView updateImage;
     Button updateButton;
-
+    Button updateAudioButton;
     Button saveMediaButton2;
     EditText updateDesc, updateTitle, updateLang, updateStory;
     String title, desc, lang, story;
@@ -46,7 +46,11 @@ public class UpdateActivity extends AppCompatActivity {
 
 
     VideoView videoViewUpdate;
+
+    VideoView updateAudioView;
     Button updateMedia;
+
+    Button updateAudio;
     String videoURL;
     Uri uri1;
     String key1, oldVideoURL;
@@ -55,6 +59,9 @@ public class UpdateActivity extends AppCompatActivity {
 
     String audioURL;
 
+    Uri uri2;
+    String key2, oldAudioURL;
+    MediaController mediaController1;
 
 
     DatabaseReference databaseReference;
@@ -72,9 +79,15 @@ public class UpdateActivity extends AppCompatActivity {
         updateStory = findViewById(R.id.updateStory);
         updateTitle = findViewById(R.id.updateTitle);
         updateMedia = findViewById(R.id.updateMedia);
+        updateAudio = findViewById(R.id.updateAudio);
 
         saveMediaButton2 = findViewById(R.id.saveMediaButton2);
         videoViewUpdate = findViewById(R.id.videoViewUpdate);
+
+
+        updateAudioButton = findViewById(R.id.updateAudioButton);
+        updateAudioView = findViewById(R.id.updateAudioView);
+
 
 
         mediaController = new MediaController(this);
@@ -115,6 +128,25 @@ public class UpdateActivity extends AppCompatActivity {
         );
 
 
+        ActivityResultLauncher<Intent> activityResultLauncher2 = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            uri2 = data.getData();
+                            // Uri uri= Uri.parse();
+
+                            updateAudioView.setVideoURI(uri2);
+                        } else {
+                            Toast.makeText(UpdateActivity.this, "No Audio Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
+
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             Glide.with (UpdateActivity.this).load(bundle.getString("Image")).into(updateImage);
@@ -125,6 +157,7 @@ public class UpdateActivity extends AppCompatActivity {
             key = bundle.getString("Key");
             oldImageURL = bundle.getString("Image");
             oldVideoURL = bundle.getString("Video");
+            oldAudioURL = bundle.getString("Audio");
         }
         databaseReference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content").child(key);
 
@@ -143,6 +176,16 @@ public class UpdateActivity extends AppCompatActivity {
                 Intent videoPicker = new Intent(Intent.ACTION_PICK);
                 videoPicker.setType("video/*");
                 activityResultLauncher1.launch(videoPicker);
+            }
+        });
+
+        updateAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent audioPicker = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                audioPicker.addCategory(Intent.CATEGORY_OPENABLE);
+                audioPicker.setType("audio/*");
+                activityResultLauncher2.launch(audioPicker);
             }
         });
 
@@ -165,7 +208,16 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
 
+        updateAudioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                saveAudio();
+            }
+        });
+
     }
+
 
     public void saveData(){
 
@@ -234,6 +286,39 @@ public class UpdateActivity extends AppCompatActivity {
         }
     }
 
+    public void saveAudio() {
+        if (uri2 == null) {
+            Toast.makeText(UpdateActivity.this, "Error, no audio selected", Toast.LENGTH_SHORT).show();
+        } else {
+            StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child("Android Audios")
+                    .child(uri2.getLastPathSegment());
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(UpdateActivity.this);
+            builder.setCancelable(false);
+            builder.setView(R.layout.progress_layout);
+            android.app.AlertDialog dialog = builder.create();
+            dialog.show();
+
+            storageReference2.putFile(uri2).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isComplete()) ;
+                    Uri urlAudio = uriTask.getResult();
+                    audioURL = urlAudio.toString();
+                    //uploadData();
+                    dialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                }
+            });
+
+        }
+    }
+
     public void updateData(){
 
         title = updateTitle.getText().toString().trim();
@@ -249,8 +334,10 @@ public class UpdateActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
                     StorageReference reference1 = FirebaseStorage.getInstance().getReferenceFromUrl(oldVideoURL);
+                    StorageReference reference2 = FirebaseStorage.getInstance().getReferenceFromUrl(oldAudioURL);
                     reference.delete();
                     reference1.delete();
+                    reference2.delete();
                     Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                     finish();
                 }

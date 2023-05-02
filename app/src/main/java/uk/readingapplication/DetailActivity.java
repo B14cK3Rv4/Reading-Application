@@ -32,9 +32,11 @@ public class DetailActivity extends AppCompatActivity {
     FloatingActionButton deleteButton, editButton;
     String key = "";
     String imageUrl = "";
-
     String videoUrl = "";
 
+    String audioUrl = "";
+
+    PlayerView detailAudio;
     PlayerView detailVideo;
 
     @Override
@@ -49,8 +51,8 @@ public class DetailActivity extends AppCompatActivity {
         detailStory = findViewById(R.id.detailStory);
         deleteButton = findViewById(R.id.deleteButton);
         editButton = findViewById(R.id.editButton);
-
         detailVideo = findViewById(R.id.detailVideo);
+        detailAudio = findViewById(R.id.detailAudio);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -65,6 +67,9 @@ public class DetailActivity extends AppCompatActivity {
 
             videoUrl = bundle.getString("Video");
             initializeExoplayerView(videoUrl);
+
+            audioUrl = bundle.getString("Audio");
+            initializeExoplayerAudio(audioUrl);
         }
 
 
@@ -86,6 +91,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
                 StorageReference storageReference1 = storage.getReferenceFromUrl(videoUrl);
+                StorageReference storageReference2 = storage.getReferenceFromUrl(audioUrl);
                 storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -104,8 +110,19 @@ public class DetailActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+                storageReference2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        reference.child(key).removeValue();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                });
+
             }
         });
+
+
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +134,7 @@ public class DetailActivity extends AppCompatActivity {
                         .putExtra("Story", detailStory.getText().toString())
                         .putExtra("Video", videoUrl)
                         .putExtra("Image", imageUrl)
+                        .putExtra("Audio", audioUrl)
                         .putExtra("Key", key);
                 startActivity(intent);
             }
@@ -139,6 +157,20 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    private void initializeExoplayerAudio(String audioURL){
+        try {
+            ExoPlayer exoPlayer1 = new ExoPlayer.Builder(this).build();
+            detailAudio.setPlayer(exoPlayer1);
+            Uri videouri1 = Uri.parse(audioURL);
+            MediaItem mediaItem1 = MediaItem.fromUri(videouri1);
+            exoPlayer1.addMediaItems(Collections.singletonList(mediaItem1));
+            exoPlayer1.prepare();
+            exoPlayer1.setPlayWhenReady(false);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Error 404", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

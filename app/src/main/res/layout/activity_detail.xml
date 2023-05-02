@@ -115,6 +115,17 @@
                 android:textSize="24sp"
                 android:textStyle="normal" />
 
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/detailAudio"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:use_controller="true"
+                app:resize_mode="fill" />
+
             <TextView
                 android:id="@+id/detailStory"
                 android:layout_width="match_parent"
