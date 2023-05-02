@@ -162,7 +162,8 @@ public class UploadActivity extends AppCompatActivity {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             uri2 = data.getData();
-                            //Uri uri= Uri.parse(song.getPath());
+                            // Uri uri= Uri.parse();
+
                             uploadAudioView.setVideoURI(uri2);
                         } else {
                             Toast.makeText(UploadActivity.this, "No Audio Selected", Toast.LENGTH_SHORT).show();
@@ -183,8 +184,9 @@ public class UploadActivity extends AppCompatActivity {
         uploadAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent audioPicker = new Intent(Intent.ACTION_PICK);
-                audioPicker.setType("video/*");
+                Intent audioPicker = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                audioPicker.addCategory(Intent.CATEGORY_OPENABLE);
+                audioPicker.setType("audio/*");
                 activityResultLauncher2.launch(audioPicker);
             }
         });
