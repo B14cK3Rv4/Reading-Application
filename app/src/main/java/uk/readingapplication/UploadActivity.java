@@ -16,6 +16,8 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -27,6 +29,10 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.ui.PlayerControlView;
+import com.google.android.exoplayer2.ui.TrackSelectionView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,14 +50,24 @@ public class UploadActivity extends AppCompatActivity {
     ImageView uploadImage;
     Button saveButton;
     Button saveMediaButton;
+    Button saveAudioButton;
     EditText uploadTitle, uploadDesc, uploadLang, uploadStory;
     String imageURL;
     Uri uri;
     VideoView uploadVideo;
+    VideoView uploadAudioView;
+
+
+
     Button uploadMedia;
+    Button uploadAudio;
+
     String videoURL;
+    String audioURL;
     Uri uri1;
+    Uri uri2;
     MediaController mediaController;
+    MediaController mediaController1;
 
 
     private void MyCustomView (Context context) {
@@ -78,16 +94,31 @@ public class UploadActivity extends AppCompatActivity {
         uploadLang = findViewById(R.id.uploadLang);
         uploadStory = findViewById(R.id.uploadStory);
 
+        uploadVideo = findViewById(R.id.videoView);
+        uploadMedia = findViewById(R.id.uploadMedia);
+
+        uploadAudioView = findViewById(R.id.uploadAudioView);
+        uploadAudio = findViewById(R.id.uploadAudio);
+
 
         saveButton = findViewById(R.id.saveButton);
         saveMediaButton = findViewById(R.id.saveMediaButton);
-        uploadVideo = findViewById(R.id.videoView);
+        saveAudioButton = findViewById(R.id.saveAudioButton);
+
 
 
         mediaController = new MediaController(this);
         uploadVideo.setMediaController(mediaController);
         uploadVideo.start();
-        uploadMedia = findViewById(R.id.uploadMedia);
+
+
+
+        mediaController1 = new MediaController(this);
+        uploadAudioView.setMediaController(mediaController1);
+        uploadAudioView.start();
+        uploadAudioView = findViewById(R.id.uploadAudioView);
+
+
 
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -122,12 +153,39 @@ public class UploadActivity extends AppCompatActivity {
                 }
         );
 
+
+        ActivityResultLauncher<Intent> activityResultLauncher2 = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            uri2 = data.getData();
+                            //Uri uri= Uri.parse(song.getPath());
+                            uploadAudioView.setVideoURI(uri2);
+                        } else {
+                            Toast.makeText(UploadActivity.this, "No Audio Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
                 photoPicker.setType("image/*");
                 activityResultLauncher.launch(photoPicker);
+            }
+        });
+
+        uploadAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent audioPicker = new Intent(Intent.ACTION_PICK);
+                audioPicker.setType("video/*");
+                activityResultLauncher2.launch(audioPicker);
             }
         });
 
@@ -152,6 +210,13 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveMedia();
+            }
+        });
+
+        saveAudioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAudio();
             }
         });
 
@@ -229,6 +294,39 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
+    public void saveAudio() {
+        if (uri2 == null) {
+            Toast.makeText(UploadActivity.this, "Error, no audio selected", Toast.LENGTH_SHORT).show();
+        } else {
+            StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child("Android Audios")
+                    .child(uri2.getLastPathSegment());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
+            builder.setCancelable(false);
+            builder.setView(R.layout.progress_layout);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            storageReference2.putFile(uri2).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isComplete()) ;
+                    Uri urlAudio = uriTask.getResult();
+                    audioURL = urlAudio.toString();
+                    //uploadData();
+                    dialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                }
+            });
+
+        }
+    }
+
 
     public void uploadData(){
 
@@ -237,7 +335,7 @@ public class UploadActivity extends AppCompatActivity {
         String lang = uploadLang.getText().toString();
         String story = uploadStory.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, story, imageURL, videoURL);
+        DataClass dataClass = new DataClass(title, desc, lang, story, imageURL, videoURL, audioURL);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
