@@ -27,7 +27,7 @@
         <activity
             android:name=".DetailActivity"
             android:exported="false"
-            android:hardwareAccelerated="true" />
+            android:hardwareAccelerated="false" />
         <activity
             android:name=".UploadActivity"
             android:exported="false"
