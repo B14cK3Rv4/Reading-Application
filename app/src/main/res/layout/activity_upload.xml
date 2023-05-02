@@ -115,7 +115,7 @@
             <VideoView
 
                 android:id="@+id/uploadAudioView"
-                android:background="@drawable/audioback"
+                android:background="@drawable/wav"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

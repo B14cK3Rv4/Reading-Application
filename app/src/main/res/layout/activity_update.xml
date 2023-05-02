@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,7 +31,7 @@
                 android:layout_marginBottom="40dp"
                 android:textSize="30sp"
                 android:textAlignment="center"
-                android:textColor="@color/blue1"/>
+                android:textColor="@color/blue1" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="185dp"
@@ -79,7 +78,7 @@
                 android:padding="16dp"
                 android:hint="Enter title name"
                 android:layout_gravity="start|center_vertical"
-                android:textColor="@color/blue1"/>
+                android:textColor="@color/blue1" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -90,7 +89,7 @@
                 android:padding="16dp"
                 android:hint="Enter description"
                 android:layout_gravity="start|center_vertical"
-                android:textColor="@color/blue1"/>
+                android:textColor="@color/blue1" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -101,7 +100,7 @@
                 android:padding="16dp"
                 android:hint="Enter language"
                 android:layout_gravity="start|center_vertical"
-                android:textColor="@color/blue1"/>
+                android:textColor="@color/blue1" />
 
             <Button
                 android:layout_width="match_parent"
@@ -115,7 +114,7 @@
             <VideoView
 
                 android:id="@+id/updateAudioView"
-                android:background="@drawable/audioback"
+                android:background="@drawable/wav"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -145,7 +144,7 @@
                 android:padding="16dp"
                 android:hint="Write your story here..."
                 android:layout_gravity="start|center_vertical"
-                android:textColor="@color/blue1"/>
+                android:textColor="@color/blue1" />
 
             <Button
                 android:layout_width="match_parent"
@@ -154,16 +153,16 @@
                 android:id="@+id/updateMedia"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
-                app:cornerRadius = "20dp"/>
+                app:cornerRadius="20dp" />
 
             <VideoView
                 android:id="@+id/videoViewUpdate"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:backgroundTint="@android:color/black"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:layoutDirection="locale"/>
+                android:background="@drawable/maxresdefault"
+                android:layoutDirection="locale" />
 
             <Button
                 android:layout_width="match_parent"
@@ -173,7 +172,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="0dp"
-                app:cornerRadius = "20dp"/>
+                app:cornerRadius="20dp" />
 
 
             <Button
@@ -184,8 +183,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="40dp"
-                app:cornerRadius = "20dp"/>
-
+                app:cornerRadius="20dp" />
 
 
         </LinearLayout>
