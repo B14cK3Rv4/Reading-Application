@@ -155,8 +155,6 @@ public class DetailActivity extends AppCompatActivity {
                 }
             });
 
-
-
             try  {
 
                 deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -174,41 +172,31 @@ public class DetailActivity extends AppCompatActivity {
                         storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-
                                 reference.child(key).removeValue();
                                 Toast.makeText(DetailActivity.this, "Story deleted", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
+
                             }
-
-
                         });
 
                         storageReference1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-
                                 reference.child(key).removeValue();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
-
                             }
                         });
-
 
                         storageReference2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-
-
                                 reference.child(key).removeValue();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
 
-
                             }
-
-
                         });
                     }
 

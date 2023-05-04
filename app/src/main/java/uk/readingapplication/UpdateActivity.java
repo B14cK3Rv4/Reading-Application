@@ -104,10 +104,18 @@ public class UpdateActivity extends AppCompatActivity {
 
 
 
+
         mediaController = new MediaController(this);
         videoViewUpdate.setMediaController(mediaController);
         videoViewUpdate.start();
-        videoViewUpdate = findViewById(R.id.videoViewUpdate);
+
+
+
+        mediaController1 = new MediaController(this);
+        updateAudioView.setMediaController(mediaController1);
+        updateAudioView.start();
+        updateAudioView = findViewById(R.id.updateAudioView);
+
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -150,8 +158,6 @@ public class UpdateActivity extends AppCompatActivity {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             uri2 = data.getData();
-                            // Uri uri= Uri.parse();
-
                             updateAudioView.setVideoURI(uri2);
                         } else {
                             Toast.makeText(UpdateActivity.this, "No Audio Selected", Toast.LENGTH_SHORT).show();
@@ -288,7 +294,7 @@ public class UpdateActivity extends AppCompatActivity {
                     while (!uriTask.isComplete()) ;
                     Uri urlVideo = uriTask.getResult();
                     videoURL = urlVideo.toString();
-                    //uploadData();
+                    //updateData();
                     dialog.dismiss();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -347,14 +353,45 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
-                    StorageReference reference1 = FirebaseStorage.getInstance().getReferenceFromUrl(oldVideoURL);
-                    StorageReference reference2 = FirebaseStorage.getInstance().getReferenceFromUrl(oldAudioURL);
-                    reference.delete();
-                    reference1.delete();
-                    reference2.delete();
-                    Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                    finish();
+
+                    StorageReference reference;
+                    StorageReference reference1;
+                    StorageReference reference2;
+
+                    try {
+                        reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
+                        reference1 = FirebaseStorage.getInstance().getReferenceFromUrl(oldVideoURL);
+                        reference2 = FirebaseStorage.getInstance().getReferenceFromUrl(oldAudioURL);
+                        reference.delete();
+                        reference1.delete();
+                        reference2.delete();
+
+                    } catch (Exception e) {
+
+                    }
+
+                    try {
+
+                        reference1 = FirebaseStorage.getInstance().getReferenceFromUrl(oldVideoURL);
+                        reference2 = FirebaseStorage.getInstance().getReferenceFromUrl(oldAudioURL);
+                        reference1.delete();
+                        reference2.delete();
+
+                    } catch (Exception e)
+
+                    {
+
+                    }
+
+                    try {
+
+                        reference2 = FirebaseStorage.getInstance().getReferenceFromUrl(oldAudioURL);
+                        reference2.delete();
+
+                    }catch (Exception d){
+
+                    }
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

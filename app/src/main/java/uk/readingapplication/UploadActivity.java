@@ -97,8 +97,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadVideo = findViewById(R.id.videoView);
         uploadMedia = findViewById(R.id.uploadMedia);
 
-        uploadAudioView = findViewById(R.id.uploadAudioView);
-        uploadAudio = findViewById(R.id.uploadAudio);
+
 
 
         saveButton = findViewById(R.id.saveButton);
@@ -106,6 +105,8 @@ public class UploadActivity extends AppCompatActivity {
         saveAudioButton = findViewById(R.id.saveAudioButton);
 
 
+        uploadAudioView = findViewById(R.id.uploadAudioView);
+        uploadAudio = findViewById(R.id.uploadAudio);
 
         mediaController = new MediaController(this);
         uploadVideo.setMediaController(mediaController);
