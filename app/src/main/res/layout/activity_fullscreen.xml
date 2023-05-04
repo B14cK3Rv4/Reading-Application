@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="40dp"
 
         android:background="@drawable/blue1_border"
         android:backgroundTint="@color/material_on_primary_emphasis_medium"

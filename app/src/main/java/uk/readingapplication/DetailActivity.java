@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
     String imageUrl = "";
     String videoUrl = "";
 
+    Boolean empty = false;
     String audioUrl = "";
 
     PlayerView detailAudio;
@@ -83,44 +84,141 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final DatabaseReference reference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content");
-                FirebaseStorage storage = FirebaseStorage.getInstance();
 
-                StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
-                StorageReference storageReference1 = storage.getReferenceFromUrl(videoUrl);
-                StorageReference storageReference2 = storage.getReferenceFromUrl(audioUrl);
-                storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
+        try {
+
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    final DatabaseReference reference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content");
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                    StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
+
+
+
+                    storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                            reference.child(key).removeValue();
+                            Toast.makeText(DetailActivity.this, "Story deleted", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
+
+
+                    });
+
+                }
+            });
+        } catch (Exception e){
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    final DatabaseReference reference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content");
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                    StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
+                    StorageReference storageReference1 = storage.getReferenceFromUrl(videoUrl);
+
+
+                    storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                            reference.child(key).removeValue();
+                            Toast.makeText(DetailActivity.this, "Story deleted", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
+
+
+                    });
+
+                    storageReference1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                            reference.child(key).removeValue();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+
+                        }
+                    });
+                }
+            });
+
+
+
+            try  {
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        reference.child(key).removeValue();
-                        Toast.makeText(DetailActivity.this, "Story deleted", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
+                    public void onClick(View v) {
+
+                        final DatabaseReference reference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content");
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                        StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
+                        StorageReference storageReference1 = storage.getReferenceFromUrl(videoUrl);
+                        StorageReference storageReference2 = storage.getReferenceFromUrl(audioUrl);
+
+
+                        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                                reference.child(key).removeValue();
+                                Toast.makeText(DetailActivity.this, "Story deleted", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+                            }
+
+
+                        });
+
+                        storageReference1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                                reference.child(key).removeValue();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+
+                            }
+                        });
+
+
+                        storageReference2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+
+                                reference.child(key).removeValue();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+
+
+                            }
+
+
+                        });
                     }
+
                 });
 
-                storageReference1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        reference.child(key).removeValue();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    }
-                });
-                storageReference2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        reference.child(key).removeValue();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    }
-                });
+            } catch (Exception a){
 
             }
-        });
+
+        }
 
 
 
@@ -153,7 +251,7 @@ public class DetailActivity extends AppCompatActivity {
             exoPlayer.setPlayWhenReady(false);
 
         } catch (Exception e) {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No video added yet", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -168,7 +266,7 @@ public class DetailActivity extends AppCompatActivity {
             exoPlayer1.setPlayWhenReady(false);
 
         } catch (Exception e) {
-            Toast.makeText(this, "Error 404", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No audio added yet", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -9,7 +9,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -66,6 +68,18 @@ public class UpdateActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     StorageReference storageReference;
+
+    private void MyCustomView (Context context) {
+
+        TypedArray arr = context.obtainStyledAttributes(R.styleable.MyCustomView);
+        readAttributes(arr, context);
+        arr.recycle();
+    }
+
+    private void readAttributes(TypedArray arr, Context context){
+        //uploadVideo.setBackground(ContextCompat.getDrawable(context, R.color.black));
+        videoViewUpdate.setBackground(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +190,7 @@ public class UpdateActivity extends AppCompatActivity {
                 Intent videoPicker = new Intent(Intent.ACTION_PICK);
                 videoPicker.setType("video/*");
                 activityResultLauncher1.launch(videoPicker);
+                MyCustomView(UpdateActivity.this);
             }
         });
 
