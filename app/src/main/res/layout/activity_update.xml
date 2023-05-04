@@ -149,7 +149,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Upload Media"
+                android:text="Upload Video"
                 android:id="@+id/updateMedia"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
