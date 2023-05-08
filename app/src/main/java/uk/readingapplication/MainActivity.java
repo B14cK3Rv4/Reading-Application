@@ -28,13 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnLogOut;
     FirebaseAuth mAuth;
-
-    FloatingActionButton fab;
-
-    RecyclerView recyclerView;
-    List<DataClass> dataList;
+    FloatingActionButton fab; // menu icon for upload
+    RecyclerView recyclerView; //card holder
+    List<DataClass> dataList; // works with the card holder list (maybe)
     DatabaseReference databaseReference;
-    ValueEventListener eventListener;
+    ValueEventListener eventListener; //event listener for lists
     SearchView searchView;
     MyAdapter adapter;
 
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
 
-
+        //no idea - maybe card holder
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -75,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content");
         dialog.show();
 
+
+        //retrieve dataClass reference from database
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //searches the list of cards query based architecture
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //onClick fab menu button
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

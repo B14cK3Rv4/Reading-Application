@@ -34,6 +34,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return new MyViewHolder(view);
     }
 
+
+    //creates the card holder setup, onClick initializes the data to be passed forward into the DetailClass
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Glide.with(context).load(dataList.get(position).getDataImage()).into(holder.recImage);
@@ -60,7 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
 
-
+    // list of possible cards
     @Override
     public int getItemCount() {
         return dataList.size();
@@ -73,6 +75,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
 
 }
+
+//details of the cards
 
 class MyViewHolder extends RecyclerView.ViewHolder{
 

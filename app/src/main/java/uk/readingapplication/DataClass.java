@@ -1,5 +1,8 @@
 package uk.readingapplication;
 
+
+
+// class that retrieves all information in string formats
 public class DataClass {
 
     private String dataTitle;
@@ -10,7 +13,6 @@ public class DataClass {
     private String dataImage;
 
     private String dataAudio;
-
 
     private String dataVideo;
     private String key;

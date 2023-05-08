@@ -25,6 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+
+    // onCreate buttons and methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    //register user
     private void createUser(){
         String email = emailAddressRegister.getText().toString();
         String password = passwordRegister.getText().toString();
@@ -58,6 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
             passwordRegister.requestFocus();
         }else{
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                //onComplete text notifications
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){

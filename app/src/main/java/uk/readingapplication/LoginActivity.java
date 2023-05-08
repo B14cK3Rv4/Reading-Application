@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+
+    //onCreate buttons and methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     });
     }
 
+    // login user collects data from String reference
     private void loginUser(){
         String email = emailAddressLogin.getText().toString();
         String password = passwordLogin.getText().toString();
