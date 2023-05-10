@@ -47,28 +47,39 @@ import java.util.Calendar;
 
 public class UploadActivity extends AppCompatActivity {
 
-    ImageView uploadImage;
-    Button saveButton;
-    Button saveMediaButton;
-    Button saveAudioButton;
     EditText uploadTitle, uploadDesc, uploadLang, uploadStory;
-    String imageURL;
-    Uri uri;
-    VideoView uploadVideo;
-    VideoView uploadAudioView;
 
+    //placeholder picture
+    ImageView uploadImage;
 
+    //button save all
+    Button saveButton;
 
+    //button save video
+    Button saveMediaButton;
+
+    //button save audio
+    Button saveAudioButton;
+
+    //upload buttons
     Button uploadMedia;
     Button uploadAudio;
+
+    String imageURL;
+    Uri uri;
 
     String videoURL;
     String audioURL;
     Uri uri1;
     Uri uri2;
+    VideoView uploadVideo;
+    VideoView uploadAudioView;
+
     MediaController mediaController;
     MediaController mediaController1;
 
+
+    //new view for when selecting upload media (phone view)
 
     private void MyCustomView (Context context) {
 
@@ -77,6 +88,7 @@ public class UploadActivity extends AppCompatActivity {
         arr.recycle();
     }
 
+    //read attributes of the view
     private void readAttributes(TypedArray arr, Context context){
         //uploadVideo.setBackground(ContextCompat.getDrawable(context, R.color.black));
         uploadVideo.setBackground(null);
@@ -108,6 +120,9 @@ public class UploadActivity extends AppCompatActivity {
         uploadAudioView = findViewById(R.id.uploadAudioView);
         uploadAudio = findViewById(R.id.uploadAudio);
 
+
+        //media controllers may malfunction based on order of code:
+
         mediaController = new MediaController(this);
         uploadVideo.setMediaController(mediaController);
         uploadVideo.start();
@@ -121,7 +136,7 @@ public class UploadActivity extends AppCompatActivity {
 
 
 
-
+        //uploads uri of an image with Toast error on defect
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -137,6 +152,8 @@ public class UploadActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        //uploads uri of a video with Toast error on defect
 
         ActivityResultLauncher<Intent> activityResultLauncher1 = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -154,6 +171,7 @@ public class UploadActivity extends AppCompatActivity {
                 }
         );
 
+        //uploads uri of an audio with Toast error on defect
 
         ActivityResultLauncher<Intent> activityResultLauncher2 = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -164,7 +182,6 @@ public class UploadActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             uri2 = data.getData();
                             // Uri uri= Uri.parse();
-
                             uploadAudioView.setVideoURI(uri2);
                         } else {
                             Toast.makeText(UploadActivity.this, "No Audio Selected", Toast.LENGTH_SHORT).show();
@@ -173,6 +190,7 @@ public class UploadActivity extends AppCompatActivity {
                 }
         );
 
+        //code to allow photoPicker based on image
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,6 +200,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
+        //code to allow photoPicker based on audio but places in a VideoView
         uploadAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +210,8 @@ public class UploadActivity extends AppCompatActivity {
                 activityResultLauncher2.launch(audioPicker);
             }
         });
+
+        //code to allow photoPicker based on video
 
         uploadMedia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +223,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
+        //save text and proceed to MainActivity
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -209,6 +231,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
+        //save video
         saveMediaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,6 +239,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
+        //save audio
         saveAudioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,6 +250,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
 
+    //save image data
     public void saveData() {
 
         if (uri == null) {
@@ -234,12 +259,14 @@ public class UploadActivity extends AppCompatActivity {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
                     .child(uri.getLastPathSegment());
 
+            //initiate loading screen
             AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
             builder.setCancelable(false);
             builder.setView(R.layout.progress_layout);
             AlertDialog dialog = builder.create();
             dialog.show();
 
+            //save image data inside the storage
             storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -264,6 +291,7 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
+    //save video data
     public void saveMedia() {
         if (uri1 == null) {
             Toast.makeText(UploadActivity.this, "Error, no video selected", Toast.LENGTH_SHORT).show();
@@ -277,6 +305,7 @@ public class UploadActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
 
+            //save video data inside the storage
             storageReference1.putFile(uri1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -297,6 +326,7 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
+    //save audio data
     public void saveAudio() {
         if (uri2 == null) {
             Toast.makeText(UploadActivity.this, "Error, no audio selected", Toast.LENGTH_SHORT).show();
@@ -310,6 +340,7 @@ public class UploadActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
 
+            //save audio data inside the storage
             storageReference2.putFile(uri2).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -331,12 +362,15 @@ public class UploadActivity extends AppCompatActivity {
     }
 
 
+    //upload everything in the realtime-database
     public void uploadData(){
 
         String title = uploadTitle.getText().toString();
         String desc = uploadDesc.getText().toString();
         String lang = uploadLang.getText().toString();
         String story = uploadStory.getText().toString();
+
+        //creates a DataClass that retrieves the data and .setValue to the database
 
         DataClass dataClass = new DataClass(title, desc, lang, story, imageURL, videoURL, audioURL);
 

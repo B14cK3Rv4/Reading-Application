@@ -30,11 +30,11 @@ public class DetailActivity extends AppCompatActivity {
     TextView detailDesc, detailTitle, detailLang, detailStory;
     ImageView detailImage;
     FloatingActionButton deleteButton, editButton;
+
+    //placeholders for the DataClass
     String key = "";
     String imageUrl = "";
     String videoUrl = "";
-
-    Boolean empty = false;
     String audioUrl = "";
 
     PlayerView detailAudio;
@@ -55,6 +55,8 @@ public class DetailActivity extends AppCompatActivity {
         detailVideo = findViewById(R.id.detailVideo);
         detailAudio = findViewById(R.id.detailAudio);
 
+
+        //retrieves text data and image with string placeholders
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             detailDesc.setText(bundle.getString("Description"));
@@ -74,6 +76,8 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
+
+        //change view to Video Library when video clicked
         detailVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,36 +88,23 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        //delete image, if only image available. delete image and video if only image and video available. delete image, video and audio if all available.
         try {
-
-
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     final DatabaseReference reference = FirebaseDatabase.getInstance("https://readingapplication-c4df8-default-rtdb.europe-west1.firebasedatabase.app").getReference("Android Content");
                     FirebaseStorage storage = FirebaseStorage.getInstance();
-
                     StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
-
-
-
                     storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-
                             reference.child(key).removeValue();
                             Toast.makeText(DetailActivity.this, "Story deleted", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         }
-
-
                     });
-
                 }
             });
         } catch (Exception e){
@@ -208,8 +199,7 @@ public class DetailActivity extends AppCompatActivity {
 
         }
 
-
-
+        //sends users to UpdateClass, edits all Strings
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,6 +218,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    //ExoPlayer for videos
     private void initializeExoplayerView(String videoURL){
         try {
             ExoPlayer exoPlayer = new ExoPlayer.Builder(this).build();
@@ -243,6 +234,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    //ExoPlayer for Audios
     private void initializeExoplayerAudio(String audioURL){
         try {
             ExoPlayer exoPlayer1 = new ExoPlayer.Builder(this).build();
@@ -257,7 +249,4 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "No audio added yet", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 }
